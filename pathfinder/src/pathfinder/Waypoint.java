@@ -2,13 +2,29 @@ package pathfinder;
 
 public class Waypoint {
 	public Point position;
-	double rotation;
-	double power;
-
-	public Waypoint(Point waypointPosition, double wpRotation, double motorPower) {
+	public double rotation;
+	
+	public double time;
+	
+	public double linVelocity;
+	public double linAcceleration;
+	public double linJerk;
+	
+	public double rotVelocity;
+	public double rotAcceleration;
+	public double rotJerk;
+	
+	public Waypoint(Point waypointPosition, double wpRotation, double speed) {
 		position = waypointPosition;
 		rotation = wpRotation;
-		power = motorPower;
+		linVelocity = speed;
+		time = 0;
+		linVelocity = 0;
+		linAcceleration = 0;
+		linJerk = 0;
+		rotVelocity = 0;
+		rotAcceleration = 0;
+		rotJerk = 0;
 	}
 
 	public void setPosition(double xPosition, double yPosition) {

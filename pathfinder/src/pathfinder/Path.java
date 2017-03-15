@@ -7,7 +7,7 @@ public class Path {
 
 	public Path(Waypoint start, Waypoint end, int numberOfPoints) {
 		waypoints = new ArrayList<Waypoint>();
-		genBezierPath(start, end, numberOfPoints, 0.8);
+		genBezierPath(start, end, numberOfPoints, 0.5);
 		alignWaypoints();
 	}
 
@@ -43,6 +43,25 @@ public class Path {
 	void alignWaypoints() {
 		for (int i = 1; i < waypoints.size() - 1; i++) {
 			waypoints.get(i).pointTowards(waypoints.get(i + 1).getPoint());
+		}
+	}
+	
+	void calcDerivatives(){
+		for(int i = 0; i < waypoints.size() - 1; i++){//First derivative (velocity) and time
+			Waypoint currentWP = waypoints.get(i);
+			Waypoint nextWP = waypoints.get(i+1);
+			double dist = currentWP.getPoint().distance(nextWP.getPoint());
+			currentWP.time = dist / currentWP.linVelocity;
+			double turn = nextWP.rotation - currentWP.rotation;
+			currentWP.rotVelocity = turn/currentWP.time;
+			waypoints.set(i, currentWP);
+		}
+		for(int i = 0; i < waypoints.size() - 1; i++){//second derivative (acceleration)
+			
+		}
+		
+		for(int i = 0; i < waypoints.size() - 1; i++){//3rd derivative (you're a)(jerk)
+			
 		}
 	}
 }
