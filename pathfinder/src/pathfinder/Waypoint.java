@@ -6,25 +6,13 @@ public class Waypoint {
 	
 	public double time;
 	
-	public double linVelocity;
-	public double linAcceleration;
-	public double linJerk;
+	public Derivatives derivatives;
 	
-	public double rotVelocity;
-	public double rotAcceleration;
-	public double rotJerk;
-	
-	public Waypoint(Point waypointPosition, double wpRotation, double speed) {
+	public Waypoint(Point waypointPosition, double wpRotation) {
 		position = waypointPosition;
 		rotation = wpRotation;
-		linVelocity = speed;
 		time = 0;
-		linVelocity = 0;
-		linAcceleration = 0;
-		linJerk = 0;
-		rotVelocity = 0;
-		rotAcceleration = 0;
-		rotJerk = 0;
+		derivatives = new Derivatives();
 	}
 
 	public void setPosition(double xPosition, double yPosition) {

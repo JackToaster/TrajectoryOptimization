@@ -5,15 +5,17 @@ import javax.swing.SwingUtilities;
 public class Main {
 
 	public static void main(String[] args) {
-
-		Waypoint start = new Waypoint(new Point(100,400),Math.PI/2,1);
-		Waypoint end = new Waypoint(new Point(600,200),Math.PI,1);
-		Path path = new Path(start,end, 100);
-		
+		System.out.println("Starting path generation...");
+		Waypoint start = new Waypoint(new Point(0.5, 0.5),3 * Math.PI / 2);
+		Waypoint end = new Waypoint(new Point(5, 3),Math.PI);
+		Path path = new Path(start,end, 50, 2);
+		System.out.println("Path generation finished.");
+		TrajectoryOptimizer traj = new TrajectoryOptimizer(path);
+		Path newPath = traj.path;
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {
-				new Drawer(path); // Let the constructor do the job
+				Drawer d = new Drawer(newPath); // Let the constructor do the job
 			}
 		});
 	}

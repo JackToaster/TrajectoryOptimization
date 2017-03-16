@@ -6,11 +6,16 @@ import javax.swing.*; // Using Swing's components and containers
 
 public class Drawer extends JFrame {
 
-	public static final int CANVAS_WIDTH = 640;
-	public static final int CANVAS_HEIGHT = 480;
-
+	public static final int CANVAS_WIDTH = 1080;
+	public static final int CANVAS_HEIGHT = 720;
+	
+	public static final float scale = 200;
+	
 	public static final int ROBOT_SIZE = 30;
-	public static final int POWER_MULT = 20;
+	public static final int VELOCITY_MULT = 20;
+	public static final int ACCELERATION_MULT = 20;
+	public static final int JERK_MULT = 10;
+	
 	
 	public Path path;
 	
@@ -49,7 +54,7 @@ public class Drawer extends JFrame {
 		private void drawPath(Graphics2D g, Path p){
 			float hue = 0;
 			for(Waypoint wp : p.waypoints){
-				g.setColor(Color.getHSBColor(hue, 1.0f, 0.8f));
+				g.setColor(Color.getHSBColor(hue, 0.4f, 0.8f));
 				hue += 0.1;
 				hue = hue % 1;
 				drawWP(g, wp);
@@ -57,12 +62,16 @@ public class Drawer extends JFrame {
 		}
 		private void drawWP(Graphics2D g, Waypoint wp) {
 			Graphics2D gg = (Graphics2D) g.create();
-			gg.translate((int) wp.position.x, (int) wp.position.y);
+			gg.translate((int) (wp.position.x * scale), (int) (wp.position.y * scale));
 			gg.rotate(wp.rotation);
 			gg.fillRect(-ROBOT_SIZE / 2, -ROBOT_SIZE / 2, ROBOT_SIZE, ROBOT_SIZE);
 			gg.setColor(Color.BLACK);
 			gg.drawRect(-ROBOT_SIZE / 2, -ROBOT_SIZE / 2, ROBOT_SIZE, ROBOT_SIZE);
-			gg.drawLine(0, 0, (int) wp.power * -POWER_MULT, 0);
+			gg.drawLine(0, 5, (int) (wp.derivatives.linVelocity * -VELOCITY_MULT), 5);
+			gg.setColor(Color.BLUE);
+			gg.drawLine(0, 0, (int) (wp.derivatives.linAcceleration * -ACCELERATION_MULT), 0);
+			gg.setColor(Color.RED);
+			gg.drawLine(0, -5, (int) (wp.derivatives.linJerk * -JERK_MULT), -5);
 			gg.dispose();
 		}
 	}
