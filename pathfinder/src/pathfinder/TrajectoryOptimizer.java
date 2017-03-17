@@ -2,18 +2,18 @@ package pathfinder;
 
 public class TrajectoryOptimizer {
 	public static final double LIN_VELOCITY = 5;
-	public static final double LIN_ACCELERATION = 3;
-	public static final double LIN_JERK = 8;
+	public static final double LIN_ACCELERATION = 8;
+	public static final double LIN_JERK = 50;
 	
 	public static final double ROT_VELOCITY = 2;
 	public static final double ROT_ACCELERATION = 4;
-	public static final double ROT_JERK = 5;
+	public static final double ROT_JERK = 20;
 	
 	public static final double TIME_COST = 1;
 	public static final double DIFFICULTY_COST = 20;
-	public static final double MAX_VALUE_PERCENT = 0.6;
+	public static final double MAX_VALUE_PERCENT = 0.8;
 	
-	public static final int ITERATIONS = 1000;
+	public static final int ITERATIONS = 1;
 	public static final double ALPHA = 0.005;
 	
 	public Path path;
@@ -21,11 +21,9 @@ public class TrajectoryOptimizer {
 	public TrajectoryOptimizer(Path p){
 		path = p;
 		System.out.println("Start Cost: " + calculateCost());
-		optimizeCost();
-		System.out.println("End Cost:   " + calculateCost());
 	}
 	
-	void optimizeCost(){
+	public void optimizeCost(){
 		for(int i = 0; i < ITERATIONS; i++){//loop through and optimize
 			double startCost = calculateCost();
 			for(int j = 1; j < path.waypoints.size() - 1; j++){//go through each point
@@ -61,8 +59,8 @@ public class TrajectoryOptimizer {
 		
 		cost += difficulty / path.waypoints.size() * DIFFICULTY_COST;
 		cost += time * TIME_COST;
-		System.out.println("Time:      " + time);
-		System.out.println("Difficulty:" + difficulty / path.waypoints.size());
+		//System.out.println("Time:      " + time);
+		//System.out.println("Difficulty:" + difficulty / path.waypoints.size());
 		
 		return cost;
 	}
